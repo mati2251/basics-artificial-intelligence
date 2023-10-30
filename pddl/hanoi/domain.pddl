@@ -9,14 +9,25 @@
     (:predicates
         (on ?k1 - block ?k2 - block)
         (access ?x - stake ?k - block)
+        (biggerr ?k1 - block ?k2 - block)
         (bigger ?k1 - block ?k2 - block)
+    )
+    (:derived
+        (biggerr ?k1 ?k2 - block)
+        (or
+            (bigger ?k1 ?k2)
+            (exists
+                (?k3 - block)
+                (and (bigger ?k1 ?k3) (biggerr ?k3 ?k2))
+            )
+        )
     )
     (:action przesun
         :parameters (?x ?y - stake ?k1 ?k2 - block)
         :precondition (and
             (access ?x ?k1)
             (access ?y ?k2)
-            (bigger ?k2 ?k1)
+            (biggerr ?k2 ?k1)
         )
         :effect (and
             (not (access ?x ?k1))
