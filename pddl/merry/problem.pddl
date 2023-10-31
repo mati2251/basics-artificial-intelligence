@@ -4,6 +4,8 @@
         a b c d e f g h i - room
         ga pb yc bc gd rd be ge bf b2f gh rh yi bi - scolor
         niebieski czerwony zielony pomaranczowy rozowy - color
+        c1 c2 c3 - cord
+        n1 n2 n3 n4 n5 n6 n7 n8 - block
     )
 
     (:init
@@ -28,14 +30,13 @@
         (iscolor f b2f)
         (tocolor niebieski b2f)
         (iscolor h gh)
-        (tocolor zielone gh)
+        (tocolor zielony gh)
         (iscolor h rh)
         (tocolor czerwony rh)
         (iscolor i yi)
         (tocolor pomaranczowy yi)
         (iscolor i bi)
         (tocolor niebieski bi)
-
 
         (from a b pomaranczowy)
         (from a c czerwony)
@@ -56,12 +57,36 @@
         (from f g rozowy)
 
         (position f)
+
+        (avaliablepuzzle a)
+
+        (value c1 c1 n5)
+        (value c2 c1 n4)
+        (value c3 c1 n1)
+        (value c1 c2 n8)
+        (value c2 c2 FREE)
+        (value c3 c2 n3)
+        (value c1 c3 n7)
+        (value c2 c3 n2)
+        (value c3 c3 n6)
+
+        (next c1 c2)
+        (next c2 c3)
+        (next c3 c2)
+        (next c2 c1)
     )
 
     (:goal
         (and
-            (position h)
-            (avaliablecolor bi)
+            (position g)
+            (value c1 c1 n1)
+            (value c2 c1 n2)
+            (value c3 c1 n3)
+            (value c1 c2 n4)
+            (value c2 c2 n5)
+            (value c3 c2 n6)
+            (value c1 c3 n7)
+            (value c2 c3 n8)
         )
     )
 
