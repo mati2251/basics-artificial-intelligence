@@ -3,6 +3,8 @@
     (:objects
         p1 p2 p3 p4 p5 p6 p7 - planet
         d1 d2 d3 d4 d5 d6 - teleport
+        pos1 pos2 pos3 pos4 pos5 pos6 - position
+        a b c d e - puzzle
     )
     (:init
         (position p1)
@@ -29,10 +31,26 @@
         (lever p5 d5)
         (lever p6 d6)
 
+        (locked d1 p4)
+        (unlocked_available d1 p5)
+
+        (puzzle_pos pos1 d)
+        (puzzle_pos pos2 e)
+        (puzzle_pos pos3 a)
+        (puzzle_pos pos4 b)
+        (puzzle_pos pos5 FREE_P)
+        (puzzle_pos pos6 c)
+        (available_puzzle p6)
+
     )
     (:goal
         (and
             (position p7)
+            (puzzle_pos pos1 a)
+            (puzzle_pos pos2 b)
+            (puzzle_pos pos3 c)
+            (puzzle_pos pos4 d)
+            (puzzle_pos pos5 e)
         )
     )
 )
