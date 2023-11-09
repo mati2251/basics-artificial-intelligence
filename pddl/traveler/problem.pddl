@@ -42,6 +42,16 @@
         (puzzle_pos pos6 c)
         (available_puzzle p6)
 
+        (next pos1 pos2)
+        (next pos2 pos3)
+        (next pos3 pos4)
+        (next pos4 pos5)
+        (next pos5 pos1)
+        (next pos1 pos6)
+        (next pos2 pos6)
+        (next pos3 pos6)
+        (next pos4 pos6)
+        (next pos5 pos6)
     )
     (:goal
         (and

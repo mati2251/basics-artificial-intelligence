@@ -19,6 +19,8 @@
 
         (available_puzzle ?p - planet)
         (puzzle_pos ?pos - position ?puz - puzzle)
+
+        (next ?pos1 ?pos2 - position)
     )
     (:action move
         :parameters (?p - planet)
@@ -91,6 +93,7 @@
                 (?free_positon - position)
                 (puzzle_pos ?free_positon FREE_P)
             )
+            (or (next ?positon ?free_positon) (next ?free_positon ?positon))
         )
         :effect (and
             (not (puzzle_pos ?positon ?puzzle))
