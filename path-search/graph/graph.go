@@ -17,12 +17,15 @@ type Edge struct {
 	From   *Node
 }
 
+var goalState bool = false
+
 func generateR(start *Node, depth int, currDepth int) {
 	degreeLevel := rand.Intn(4) + 1
 	edges := make([]Edge, degreeLevel)
 	goal := false
-	if currDepth == depth-1 {
+	if currDepth == depth-1 && rand.Intn(10) == 1 {
 		goal = true
+		goalState = true
 	} else if currDepth == depth {
 		start.Edges = &[]Edge{}
 		return
@@ -39,7 +42,10 @@ func generateR(start *Node, depth int, currDepth int) {
 
 func Generate(depth int) *Node {
 	start := Node{Name: "node"}
-	generateR(&start, depth, 0)
+	goalState = false
+	for !goalState {
+		generateR(&start, depth, 0)
+	}
 	return &start
 }
 
