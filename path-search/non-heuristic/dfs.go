@@ -1,32 +1,34 @@
 package main
 
 import (
-	"fmt"
 	"path-search/graph"
 )
 
 func main() {
-	root := graph.Generate(4)
+	root := graph.Generate(5)
 	keys := dfs(root)
-	fmt.Println(keys)
+	graph.PrintGraphMark(root, &keys)
 }
 
 func dfs(start *graph.Node) []string {
 	result := make([]string, 0)
 	visited := make(map[string]bool)
-	dfsr(start, visited, &result)
-	keys := make([]string, 0)
-	for key := range visited {
-		keys = append(keys, key)
-	}
-	return keys
+	goal := false
+	dfsr(start, visited, &result, &goal)
+	return result
 }
 
-func dfsr(start *graph.Node, visited map[string]bool, result *[]string) {
+func dfsr(start *graph.Node, visited map[string]bool, result *[]string, goal *bool) {
 	visited[start.Name] = true
+	*result = append(*result, start.Name)
 	for _, edge := range *start.Edges {
-		if !visited[edge.To.Name] {
-			dfsr(edge.To, visited, result)
+		if !visited[edge.To.Name] && !*goal {
+			dfsr(edge.To, visited, result, goal)
 		}
 	}
+	if start.Goal || *goal {
+		*goal = true
+		return
+	}
+	*result = (*result)[:len(*result)-1]
 }
