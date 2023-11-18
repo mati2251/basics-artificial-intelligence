@@ -3,6 +3,9 @@ package graph
 import (
 	"fmt"
 	"math/rand"
+	"os"
+	"slices"
+	"strings"
 )
 
 type Node struct {
@@ -17,56 +20,92 @@ type Edge struct {
 	From   *Node
 }
 
-var goalState bool = false
+const NONE_COLOR = "\033[0m"
+const GREEN_COLOR = "\033[0;32m"
+const RED_COLOR = "\033[0;32m"
 
 func generateR(start *Node, depth int, currDepth int) {
 	degreeLevel := rand.Intn(4) + 1
 	edges := make([]Edge, degreeLevel)
-	goal := false
-	if currDepth == depth-1 && rand.Intn(10) == 1 {
-		goal = true
-		goalState = true
-	} else if currDepth == depth {
+	if currDepth == depth {
 		start.Edges = &[]Edge{}
 		return
 	}
 	for deg := 1; deg <= degreeLevel; deg++ {
 		edges[deg-1] = Edge{
 			Weight: rand.Intn(20) + 1,
-			To:     &Node{Name: start.Name + "." + fmt.Sprint(deg), Goal: goal},
+			From:   start,
+			To:     &Node{Name: start.Name + "." + fmt.Sprint(deg), Goal: false},
 		}
 		generateR(edges[deg-1].To, depth, currDepth+1)
 	}
 	start.Edges = &edges
 }
 
+func setGoalState(start *Node) {
+	degree := len(*start.Edges)
+	if degree == 0 {
+		start.Goal = true
+		return
+	}
+	nextIndex := rand.Intn(degree)
+	for index, edge := range *start.Edges {
+		if nextIndex == index {
+			setGoalState(edge.To)
+		}
+	}
+
+}
+
 func Generate(depth int) *Node {
 	start := Node{Name: "node"}
-	goalState = false
-	for !goalState {
-		generateR(&start, depth, 0)
+	generateR(&start, depth, 0)
+	for i := 0; i < depth; i++ {
+		setGoalState(&start)
 	}
 	return &start
 }
 
-func printGraphR(start *Node, gap string) {
+func printGraphR(start *Node, gap string, path *[]string, goal *bool) {
 	ovrGap := gap
-	if len(ovrGap) > 2 {
-		ovrGap = ovrGap[:len(ovrGap)-3] + "|--"
+	if lastIndex := strings.LastIndex(ovrGap, "  "); lastIndex != -1 {
+		ovrGap = ovrGap[:lastIndex-1] + "|" + NONE_COLOR + "--" + ovrGap[lastIndex+2:]
 	}
-	fmt.Printf("%s%s\n", ovrGap, start.Name)
-	gap += "|  "
+	if *goal {
+		ovrGap = strings.ReplaceAll(ovrGap, GREEN_COLOR, "")
+	}
+	if slices.Contains(*path, start.Name) {
+		ovrGap = strings.ReplaceAll(ovrGap, NONE_COLOR, "")
+		fmt.Fprintf(os.Stdout, "%s%s%s%s\n", ovrGap, GREEN_COLOR, start.Name, NONE_COLOR)
+		gap = strings.ReplaceAll(gap, RED_COLOR, NONE_COLOR)
+		gap += RED_COLOR + "|  " + NONE_COLOR
+		if start.Goal {
+			*goal = true
+		}
+	} else {
+		fmt.Fprintf(os.Stdout, "%s%s\n", ovrGap, start.Name)
+		gap += "|  "
+	}
 	for index, edge := range *start.Edges {
 		if edge.To == nil {
 			continue
 		}
 		if index == len(*start.Edges)-1 {
-			gap = gap[:len(gap)-3] + "   "
+			if lastIndex := strings.LastIndex(gap, "|  "); lastIndex != -1 {
+				gap = gap[:lastIndex] + "   " + gap[lastIndex+3:]
+			}
 		}
-		printGraphR(edge.To, gap)
+		printGraphR(edge.To, gap, path, goal)
 	}
 }
 
+func PrintGraphMark(start *Node, path *[]string) {
+	goal := false
+	printGraphR(start, "", path, &goal)
+}
+
 func PrintGraph(start *Node) {
-	printGraphR(start, "")
+	goal := false
+	empty := []string{}
+	printGraphR(start, "", &empty, &goal)
 }
