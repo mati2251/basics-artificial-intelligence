@@ -109,3 +109,48 @@ func PrintGraph(start *Node) {
 	empty := []string{}
 	printGraphR(start, "", &empty, &goal)
 }
+
+func TestGraph() *Node {
+	a := Node{Name: "A", Goal: false}
+	b := Node{Name: "B", Goal: false}
+	c := Node{Name: "C", Goal: false}
+	d := Node{Name: "D", Goal: false}
+	e := Node{Name: "E", Goal: false}
+	f := Node{Name: "F", Goal: false}
+	g := Node{Name: "G", Goal: false}
+	h := Node{Name: "H", Goal: false}
+	i := Node{Name: "I", Goal: false}
+	j := Node{Name: "J", Goal: true}
+	k := Node{Name: "K", Goal: true}
+	a.Edges = &[]Edge{
+		{Weight: 4, To: &b, From: &a},
+		{Weight: 3, To: &c, From: &a},
+		{Weight: 3, To: &d, From: &a},
+	}
+	b.Edges = &[]Edge{
+		{Weight: 2, To: &e, From: &b},
+		{Weight: 5, To: &f, From: &b},
+	}
+	c.Edges = &[]Edge{
+		{Weight: 3, To: &f, From: &c},
+		{Weight: 3, To: &h, From: &c},
+	}
+	d.Edges = &[]Edge{
+		{Weight: 2, To: &h, From: &d},
+	}
+	e.Edges = &[]Edge{}
+	f.Edges = &[]Edge{
+		{Weight: 2, To: &g, From: &f},
+		{Weight: 3, To: &j, From: &f},
+	}
+	g.Edges = &[]Edge{}
+	h.Edges = &[]Edge{
+		{Weight: 1, To: &i, From: &h},
+	}
+	i.Edges = &[]Edge{
+		{Weight: 1, To: &k, From: &i},
+	}
+	j.Edges = &[]Edge{}
+	k.Edges = &[]Edge{}
+	return &a
+}
