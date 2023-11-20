@@ -5,7 +5,7 @@ import (
 )
 
 func main() {
-	root := graph.Generate(5)
+	root := graph.TestGraph()
 	keys := dfsFirst(root)
 	graph.PrintGraphMark(root, &keys)
 }
