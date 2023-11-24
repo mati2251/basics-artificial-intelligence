@@ -14,3 +14,12 @@ func TestDFS(t *testing.T) {
 		t.Errorf("Expected %v, got %v", expected, result)
 	}
 }
+
+func TestDFSAll(t *testing.T) {
+	root := graph.TestGraph()
+	result := dfsOptimal(root)
+	expected := []string{"A", "C", "H", "I", "K"}
+	if !reflect.DeepEqual(result, expected) {
+		t.Errorf("Expected %v, got %v", expected, result)
+	}
+}
