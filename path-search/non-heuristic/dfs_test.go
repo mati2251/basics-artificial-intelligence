@@ -1,4 +1,4 @@
-package main
+package non 
 
 import (
 	"path-search/graph"
@@ -8,7 +8,7 @@ import (
 
 func TestDFS(t *testing.T) {
 	root := graph.TestGraph()
-	result := dfsFirst(root)
+	result := DFSfirst(root)
 	expected := []string{"A", "B", "F", "J"}
 	if !reflect.DeepEqual(result, expected) {
 		t.Errorf("Expected %v, got %v", expected, result)
@@ -17,7 +17,7 @@ func TestDFS(t *testing.T) {
 
 func TestDFSAll(t *testing.T) {
 	root := graph.TestGraph()
-	result := dfsOptimal(root)
+	result := DFSOptimal(root)
 	expected := []string{"A", "C", "H", "I", "K"}
 	if !reflect.DeepEqual(result, expected) {
 		t.Errorf("Expected %v, got %v", expected, result)

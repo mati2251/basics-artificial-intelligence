@@ -1,17 +1,11 @@
-package main
+package non 
 
 import (
 	"math"
 	"path-search/graph"
 )
 
-func main() {
-	root := graph.TestGraph()
-	keys := dfsFirst(root)
-	graph.PrintGraphMark(root, &keys)
-}
-
-func dfsFirst(start *graph.Node) []string {
+func DFSfirst(start *graph.Node) []string {
 	result := make([]string, 0)
 	visited := make(map[string]bool)
 	goal := false
@@ -34,7 +28,7 @@ func dfsrFirst(start *graph.Node, visited map[string]bool, result *[]string, goa
 	*result = (*result)[:len(*result)-1]
 }
 
-func dfsOptimal(start *graph.Node) []string {
+func DFSOptimal(start *graph.Node) []string {
 	current := make([]string, 0)
 	currentPrice := int32(0)
 	visited := make(map[string]bool)
