@@ -129,7 +129,7 @@ func TestGraph() *Node {
 	}
 	b.Edges = &[]Edge{
 		{Weight: 2, To: &e, From: &b},
-		{Weight: 5, To: &f, From: &b},
+		{Weight: 10, To: &f, From: &b},
 	}
 	c.Edges = &[]Edge{
 		{Weight: 3, To: &f, From: &c},

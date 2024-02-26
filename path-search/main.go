@@ -15,4 +15,6 @@ func main() {
   fmt.Println(bfsKeys)
   idsKeys := non.IterativeDeeping(root, 4)
   fmt.Println(idsKeys)
+  ucsKeys := non.UCS(root)
+  fmt.Println(ucsKeys)
 }
