@@ -13,4 +13,6 @@ func main() {
   fmt.Println(dfsKeys)
   bfsKeys := non.BFS(root)
   fmt.Println(bfsKeys)
+  idsKeys := non.IterativeDeeping(root, 4)
+  fmt.Println(idsKeys)
 }
