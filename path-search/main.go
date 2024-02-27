@@ -22,4 +22,6 @@ func main() {
   fmt.Println("Heuristic search")
   climbingKeys := heu.Climbing(root)
   fmt.Println(climbingKeys)
+  bfsKeys = heu.BFS(root)
+  fmt.Println(bfsKeys)
 }
